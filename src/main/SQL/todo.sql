@@ -1,11 +1,18 @@
-create table users
+create table todo
 (
-    id       serial       not null
-        constraint users_pkey
+    id        serial  not null
+        constraint todo_pkey
             primary key,
-    username varchar(255) not null,
-    password varchar(255) not null
+    title     varchar not null,
+    completed boolean not null,
+    user_id   bigint  not null
+        constraint todo_to_users
+            references users
 );
 
-alter table users
+alter table todo
     owner to postgres;
+
+create index fki_todo_to_users
+    on todo (user_id);
+
